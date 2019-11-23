@@ -1,0 +1,573 @@
+Let's make a game!
+	name:Boy Clicker
+	by:Gusuder
+	desc:Всю свою жизнь ты сидел дома и играл в компьютерные игры, ведь на улице тебя унижали пацаны с района. Настало время все изменить! Заставить их уважать тебя!
+	created:20/11/2019
+	updated:20/1/2019
+	version:alpha0.1
+
+Settings
+	background:https://psv4.userapi.com/c856220/u151940442/docs/d10/d3e0126b0b1b/579TEOZSY3Y1.png?extra=VTTGUH4MWh7d5oN1-z_ibcJo0VqELa1pvquOlM6ahFAEdpRQAO1QKHT5kJYHju4-UbWTer7xOJxBVm_GO1DGiCskz1UQhcFFk0uGEeZrlTfW7AE_0_dhy3yVcD2o2tB02GLjT_Pu-W62brz0TPe38p2IEA
+	building cost increase:115%
+	building cost refund:30%
+	spritesheet:icons, 48 by 48, https://i.ibb.co/F5nQ41M/1.png
+
+CSS
+ 
+  .thing
+  {
+    vertical-align: middle
+    border-radius:8px;
+	background:#CCCCFF;
+  }
+ 
+.box-header,.box-footer,.box-bit
+{
+	background:#9999FF
+}
+ 
+.thing.lit
+  {
+    background:#6666FF;
+  }
+ 
+  .button
+  {
+    width: 350px;
+    max-width: 100%;
+    min-height: 75px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size:14px;
+    border-radius:8px;
+    display:block;
+  }
+ 
+  .button.lit
+  {
+    background:#CCFFCC;
+  }
+ 
+.box
+ {
+    vertical-align: middle
+	
+ }
+ 
+  .thing:hover
+  {
+    background:#CCFFCC;
+  }
+ 
+  .button:hover
+  {
+    background:#F4A460;
+  }
+ 
+.thing-icon
+{
+width:64px;
+height:64px;
+float:left;
+align:left;
+mix-blend-mode: normal;
+margin-left:14px;
+margin-top:7px;
+box-shadow:none;
+}
+ 
+
+ 
+ 
+#box-buttons
+{
+    height:300px;
+    top:250px;
+}
+#box-achievements
+{
+    height:600px;
+    top:600px;
+}
+ 
+#box-log
+{
+    height:200px;
+    top:300px;
+}
+.achiev
+{
+    background:#5a4c42;
+}
+ 
+.achiev.owned
+{
+    
+}
+ 
+.building
+{
+    min-height:75px;
+    vertical-align: middle
+    border-radius:8px;
+}
+
+.particle
+  {
+    width:128px;
+    height:128px;
+    font-size:18px;
+  }
+.upgrade
+  {
+    min-width: 100px;
+    margin: auto;
+    min-height:75px;
+    font-size:14px;
+    border-radius:8px;
+    display:block;
+  }
+
+
+
+Layout
+  *main
+  contains:res, buttons, achievements
+  *buttons
+    contains:Buttons
+    class:box-buttons
+  *res
+    contains:Resources
+    class:fullWidth
+  *achievements
+    contains:Achievements
+ 
+
+*store
+  contains:buildings, upgrades
+  *buildings
+	contains:trader
+	*trader
+	header:Обменник
+	contains:tag:trader
+    contains:build
+	*build
+    header:Военные здания
+	contains:tag:build
+	contains:warrior
+  	*warrior
+	header:Воины
+	contains:tag:warrior
+  *upgrades
+	contains:lvl
+	*lvl
+	header:Улучшения
+	contains:tag:lvl
+    contains:sword
+	*sword
+    header:Твой меч
+	contains:tag:sword
+    contains:house
+    *house
+    header:Городские сооружения
+    contains:tag:house
+
+Buttons
+	*attack
+		name:Атакуй монстра, чтобы получить драгоценные камни и боевой опыт
+		on click:yield 0.1 gem
+		icon:icons[0,0]
+		no text
+		class:bigButton hasFlares
+        tooltip origin:bottom
+        tooltip class:red
+		on click:if (chance(5%)) yield 1 exp
+ 
+
+		
+Resources
+	*gem
+		name:Драгоценные камни
+		desc:Драгоценные камни выпадают с монстров, их можно обменять за золото.
+		icon:https://i.ibb.co/pbFLTd3/1gem64x64.png
+		class:noBackground
+		show earned
+		
+		*cut
+		name:Дерево
+		desc:Дерево нужно для строительства военных зданий.
+		icon:https://i.ibb.co/HG5fHRs/cut64x64.png
+		class:noBackground
+		show earned
+
+		*miner
+		name:Камень
+		desc:Камень нужен для строительства военных зданий.
+		icon:https://i.ibb.co/LYF4GLH/1miner64x64.png
+		class:noBackground
+		show earned
+
+		*money
+		name:Золото
+		desc:Золото нужно для покупки воинов и для улучшения военных зданий.
+		icon:https://i.ibb.co/bvdyM63/1money64x64.png
+		class:noBackground
+		show earned
+
+		*exp
+		name:Боевой опыт
+		desc:Убивая монстров, ты повышаешь свой боевой опыт
+		icon:https://i.ibb.co/PWp4P3V/1exp64x64.png
+		class:noBackground
+		show earned
+
+//Временно
+		*rep1
+		name:Золото
+		desc:Золото нужно для покупки воинов и для улучшения военных зданий.
+		icon:https://psv4.userapi.com/c856220/u151940442/docs/d10/dc4b0c9965b5/y.png?extra=vib8lIb0q8il1Ou5BvUScN_yUv-MGOCmFODU-L5IbFmtGaP6EAA59m4uboABYhh5n2c1dQAuudVpQQ8l99XlfjM_OGpYQXnPxvwXVb11sUuMdU1bNd-_RrEi2BdqyCICV2ZgUQlPgdfGt2zO_PNkxYJ6
+		class:noBackground
+		show earned
+
+		
+		
+
+Buildings
+
+//Обменник
+
+	*1trader
+	name:Обменник
+	desc:Здесь можно обменять драгоценные камни на золото.
+	cost:30 gem
+	icon:https://i.ibb.co/LzxyTYM/1trader64x64.png
+	passive:grant 1 money
+	cost increase:100%
+    tag:trader
+	unlocked
+	
+	*TEMPLATE
+		on click:anim glow
+		
+	*1fin|1fin
+		name:1 Палец
+		desc:Ты пытаешься начать с маленького, 1 палец для начала сойдет.<//><b>Эффект:</b><.> 1 Репутации в секунду. <//>Размер ануса увеличивается на 0.05см в секунду.
+		icon:https://psv4.userapi.com/c856220/u151940442/docs/d12/485ea3c9cb2a/Bez_imeni-5.png?extra=b3DxxNaAkDudSjlwzX9drdksmNcDnSGCRw2lfaFPVlfjjTcfMMfFkRbpw44t4fF9mxXcA8h9q17XSW4f1wCKJ8oufyVhVu54AvHV5UkIHNDVrTD4XPcmBSHr0koU3jFisHfnHte6s59l2TRxeU7i3SOI
+		cost:4 rep1
+		on tick:yield 1 rep1
+		cost increase:107%
+		unlocked
+
+	*2fin|2fin1
+		name:2 Пальца
+		desc:1 палец для тебя пустяки. Пробуй что нибудь новое, ведь репутация может пропасть<//><b>Эффект:</b><.>20 Репутация в секунду.<//>Размер ануса увеличивается на 0.05 см в секунду.
+		icon:https://psv4.userapi.com/c856220/u151940442/docs/d18/3931454ec7a1/Bez_imeni-4.png?extra=TmUS4sV-rUBO6G-NZei6RQ2EhGHSWmyKJnCmYG0nsriTTtEIuUZVwS6k7ZprTZiU4-WBo0NpwNldLh0-i423axoA6kamDLHa3UeNG8PSf7CBxHJA11I7xAjIQO_0yvvltP7FS6q7MaGS2OH3Ar9rirPJ
+		cost:60 rep1
+		on tick:yield 20 rep1
+		cost increase:115%
+		unlocked
+
+		*3fin|3fin1
+		name:3 Пальца
+		desc:Вчера тебя позвали на вечеринку, ты клёво отдохнул<//><b>Эффект:</b><.>90 Репутации в секунду.<//>Размер ануса увеличивается на 0.5 см в секунду.
+		icon:https://psv4.userapi.com/c856220/u151940442/docs/d12/be71afa2360a/Bez_imeni-7.png?extra=sYtYMKSPuP9u2v_oYQ9w35USzR7sjcy9r0FQM0mcbZV-8KM0rTU1vW02W4BeEz85qKclNcomSHeiuby12FS5JLCz6AGdlptiq7P1OrPgjUf5NNiP49_9v4XHHG00_bI05TDNhOxh3lFb1OqMupWG8WmL
+		cost:720 rep1
+		on tick:yield 90 rep1
+		cost increase:114%
+		unlocked
+
+		*4fin|4fin
+		name:4 Пальца
+		desc:После вечеринки к тебе в друзья добавилась девушка. Сегодня у вас свидание.<//><b>Эффект:</b><.>360 Репутации в секунду.<//>Размер ануса увеличивается на 1.5 см в секунду.
+		icon:https://psv4.userapi.com/c856220/u151940442/docs/d8/7d39ba6c757d/123.png?extra=2zrioQJKnhY5DzjIi7CVxvz7jxdt_x3kV3ne0IBI-DhdL0F-FBBxOFoU5no3nBlg2yzo_FNextoP8DqLWtOw7tl4Qv2hSG88sQCsfsYZtFhmwFfhrd13OVTCYnrmfiwhVQuCo_d71Wp8Z2CGFD8yxQhB
+		cost:8640 rep1
+		on tick:yield 360 rep1
+		cost increase:113%
+		unlocked
+
+		*5fin|5fin1
+		name:Кулак
+		desc:Однажды вечером, попивая пиво со смотрящим, ты предаёшься ностальгии по комнатной жизни.<//><b>Эффект:</b><.>2160 Репутации в секунду.<//>Размер ануса увеличивается на 3 см в секунду.
+		icon:https://psv4.userapi.com/c856220/u151940442/docs/d1/4946fae67b96/20.png?extra=2XQsoAvST3QQ3bb-2JlU-Nqrge8FN2rHhiENT6NJv7rdu98UljKNVSn4ukmnoRn1jJ6Hr6w3p2zGQPtQzgKqKcscKZ-1wcGE9HtZeqGVg43kM8ivBWhoGD50dW5p_tpoGvdLFNWRBS5G_4oYRnyqSZsT
+		cost:103680 rep1
+		on tick:yield 2160 rep1
+		cost increase:112%
+		unlocked
+
+		*05b|05b1
+		name:Бутылка 0,5 литра
+		desc:Вчера ты начал крышевать ломбард.<//><b>Эффект:</b><.>6480 Репутации в секунду.<//>Размер ануса увеличивается на 10 см в секунду.
+		icon:https://psv4.userapi.com/c856220/u151940442/docs/d10/3ddbc864cad9/01.png?extra=iYwIrUQK1dBc0KyYPzA3ur8sbfKAbxwXMUrfxPiBK2rWqhj2JFZe-lqEX1cZiivihUheq4C-aIPSdli1CUnM75DMFh7Kcj3NLTW7aP4n4JMwh07NGOtDTT-4Cdr4yu4f7pTGjFluaJswACdjOVn9Bn-R
+		cost:1244160 rep1
+		on tick:yield 6480 rep1
+		cost increase:111%
+		unlocked
+
+		*1b|1b1
+		name:Бутылка 1 литр
+		desc:Вчера у тебя была свадьба. На нее приехали пацаны не то что с других районов, так еще и с других городов.<//><b>Эффект:</b><.>19440 Репутации в секунду.<//>Размер ануса увеличивается на 10 см в секунду.
+		icon:https://psv4.userapi.com/c856220/u151940442/docs/d11/742fc10a632c/sss.png?extra=FHSEr7Cgk0LjznWa3W0voeXHRBrPlbtKH8mrpZL3_R6CjqSqaGkDr6S1PSjIUQkCYzdLX7cAehhJpUcN22pcX26sIjdHUWh7WOTYaBC57JellTemTH6lUC2g3mpC_kl0SGlao6gTgiM2Jvn5MPQpdoDx
+		cost:14929920 rep1
+		on tick:yield 19440 rep1
+		cost increase:110%
+		unlocked
+
+		*19lit|19lit1
+		name:Тара от кулера 19литров
+		desc:Неделю назад тебе на почту пришло письмо. Это приглашение в гос.думу.<//><b>Эффект:</b><.>58320 Репутации в секунду.<//>Размер ануса увеличивается на 50 см в секунду.
+		icon:https://psv4.userapi.com/c856220/u151940442/docs/d6/2d41253b892b/11.png?extra=B5qi5_LrZBoBvw7faOgX9RaPChYs5qtJ1Kq9hnRQSBnZVEikdwiF6VrNFGZxzUKMupKqo01Z8gXSilNvpCe3yteKFUYD4vNrhLRmPoIEUzPrydDJh_2aXvqL799TIaJzNaKVjqJ1Ggtg_yuK0deHDzSY
+		cost:179159040 rep1
+		on tick:yield 58320 rep1
+		cost increase:109%
+		unlocked
+
+
+//Улучшения бойцов
+		*test
+        name:test
+        desc:test
+        cost:1 rep1
+		on tick:yield 100000 rep1
+        tag:warrior
+
+
+//Улучшения улучшений
+		*1lvl
+		on click:anim glow
+        passive:if (have this) hide this
+		name:Учиться разделывать монстров
+        desc:Разделка туш монстров тебе точно понадобится, ведь у них в животах очень много драгоценных камней.
+        cost:120 exp
+		passive:multiply yield of gem by 3
+        tag:lvl
+
+//Улучшения меча
+		*1sword
+		on click:anim glow
+        passive:if (have this) hide this
+		name:Дубина
+        desc:Своё первое оружие вы нашли у соседа в огороде.
+        cost:1 gem
+		icon:https://i.ibb.co/jwHYKY7/1sword64x64.png
+        tag:sword
+		unlocked
+
+		*2sword
+		on click:anim glow
+        passive:if (have this) hide this
+		name:Деревянный меч
+		desc:Этот меч тебе подарили жители твоей деревни за оказанную им помощь.
+		cost:15 gem
+		icon:https://i.ibb.co/B6W05Qf/2sword64x64.png
+		req:(1sword>=1)
+		passive:multiply yield of gem by 3
+        tag:sword
+
+		*3sword
+		on click:anim glow
+        passive:if (have this) hide this
+		name:Каменный меч
+		desc:Этот меч ты нашел в лесу, когда убегал от стаи монстров.
+		cost:60 gem
+		icon:https://i.ibb.co/6why7f2/3sword64x64.png
+		req:(2sword>=1)
+		passive:multiply yield of gem by 3
+        tag:sword
+
+		*4sword
+		on click:anim glow
+        passive:if (have this) hide this
+		name:Железный меч
+		desc:Этот меч тебе выковал один твой знакомый кузнец с хорошей скидкой.
+		cost:240 gem
+		icon:https://i.ibb.co/SnFDFSN/4sword64x64.png
+		req:(3sword>=1)
+		passive:multiply yield of gem by 3.4
+        tag:sword
+
+		*5sword
+		on click:anim glow
+        passive:if (have this) hide this
+		name:Золотой меч
+		desc:Такой красивый, но бесполезный.
+		cost:960 gem
+		icon:https://i.ibb.co/hDShfMS/5sword64x64.png
+		req:(4sword>=1)
+		passive:multiply yield of gem by 2
+        tag:sword
+
+		*6sword
+		on click:anim glow
+        passive:if (have this) hide this
+		name:Алмазный меч
+		desc:Этот меч тебе подарил барон соседнего королевства за то, что спас его дочь.
+		cost:3840 gem
+		icon:https://i.ibb.co/GWFKFLv/6sword64x64.png
+		req:(5sword>=1)
+		passive:multiply yield of gem by 2.5
+        tag:sword
+
+//Улучшения Гор.Сооружений
+		*1house
+		name:Каменоломня
+        desc:Здесь добывают камень.
+        cost:25 gem
+		on tick:yield 0.2 miner
+		cost increase:250%
+        tag:house
+		unlocked
+
+		*2house
+		name:Лесоповал
+		desc:Здесь добывают дерево.
+		cost:25 gem
+		on tick:yield 0.2 cut
+		cost increase:250%
+		tag:house
+		unlocked
+
+
+
+
+
+Upgrades
+	*TEMPLATE
+        on click:anim glow
+        passive:if (have this) hide this
+
+		*Adidas
+		name:Кросcовки ADIDAS
+		desc:Купив кроссовки ADIDAS хотя бы не стыдно на улицу выйти.<//><b>Эффекты:</b><.>Садись в 2 раза эффективнее.<//>В 2 раза больше Репутации за 1 палец
+		icon:https://psv4.userapi.com/c856220/u151940442/docs/d14/4f80a60d2b71/22.png?extra=7e1yW07rkfZqKyifMBi5kP0R52PJoTC_TlBcl7-sAC1z4SjnWtjDI9TTHO2l9aSDdXeHYph9o7GBxZpRY2D80yy4ofePqlll4RXxBl7fLvsKXgGpbESR9wBoI9oOLZBiySIDiKAe3LksJdCx2bHrUikR
+		cost:100 rep1
+		passive:multiply yield of 1fin by 2
+		req:(1fin>=1)
+		
+		*Knife
+		name:Нож-Бабочка
+		desc:Пока что для самообороны.<//><b>Эффекты:</b><.>Садись в 2 раза эффективнее.<//>В 2 раза больше Репутации за 1 палец
+		icon:https://psv4.userapi.com/c856220/u151940442/docs/d16/e12cf1b99450/22.png?extra=d4LzYEB_04fpcvG1noBDLr3MP9fiqYuD4iursYCuizTlXQumGcaYFx3eRitm8lM9uB-WQPDfzhCpt_WATRztChDUYz9A32ucnaXPr131Yx39LLLtC7Oe6HAH0u3zF-W3uSem3dyjcmFMY-G6Gy6miMxk
+		cost:500 rep1
+		passive:multiply yield of 1fin by 2
+		req:(1fin>=1)
+
+		*kent
+		name:Кент
+		desc:Даже самым отважным людям нужны товарищи.<//><b>Эффект:</b><.>Садись в 2 раза эффективнее.<//>В 2 раза больше Репутации за 1 палец
+		icon:https://psv4.userapi.com/c856220/u151940442/docs/d16/b426e754fbbc/22.png?extra=6gvA1sisD5AbUqsXTmWeWijmjQH4Bq2iHQ5ZnfgBb8E3JIwDS16UY4n-IUcoTYvjYKKuCrDltUN1G6y89d4VosYKiC2rSbI6U9zoJ9MhQa18K1OZjD4NJg0ybqhMI3ppDSfTxsC9au7Q-CAxmschvd7Y
+		cost:10000 rep1
+		passive:multiply yield of 1fin by 2
+		req:(1fin>=10)
+
+		*leather
+		name:Батина кожанка
+		desc:Убираясь дома ты нашел батину кожанку. Носи ее с гордостью!.<//><b>Эффект:</b><.>Садись в 2 раза эффективнее.<//>В 2 раза больше Репутации за 1 палец
+		icon:https://psv4.userapi.com/c856220/u151940442/docs/d7/74b97ba1b40f/22.png?extra=oU0R4Z868bFvHc4mAVrq-HOg22VZW9TZelYAFKD_mqtKhBIcbukjlt-TsYVEz6fp48YlP6W-NiLqt_8Vary3Zbm42NTt4VoTt1Fy8jlRwUoYJR2DK8j7ZR698JEwHpViyuCi5gCLltkqHwVvdLwZzR5E
+		cost:100000 rep1
+		passive:multiply yield of 1fin by 2
+		req:(1fin>=25)
+
+		*makarof
+		name:Пистолет макарова
+		desc:Этот пистолет тебе подарили на день рождения.<//><b>Эффект:</b><.>Садись в 2 раза эффективнее.<//>В 2 раза больше Репутации за 1 палец
+		icon:https://psv4.userapi.com/c856220/u151940442/docs/d6/781c8afdc16d/22.png?extra=nFc82co1iALVy4flv1LU1nTPz3J07dpQ0Yw3rl1wFXWJEFc7GMqD4p0nfvNO1r_z16VLglPvsliNFKjla6H3eQTK7RVM1HSIFgkf9jfUDP4t7wa5ewx3UNs-VTdRoLArNvrVuum-niGMYFvPrvREG5ez
+		cost:10000000 rep1
+		passive:multiply yield of 1fin by 2
+		req:(1fin>=50)
+
+		*opg
+		name:ОПГ
+		desc:Настало время великий действий. В этом тебе помогут твои кенты.<//><b>Эффект:</b><.>В 2 раза больше Репутации за 2 пальца
+		icon:https://psv4.userapi.com/c856220/u151940442/docs/d6/d65800c9eaa6/22.png?extra=0-Donw_X1bDkUpffH-qZ12PnVumY6KrgipN9lKN5h_wNKTj7reoIi1CMpZYmTYp8fVbAE5FaDlBolXMU9VqP89lLA5so0IhwqHe0ibUfswvwmLBfVMMArKk0e8SRYa_l8Rv7s3eXN3HWBphSmBS4NrJn
+		cost:1000 rep1
+		passive:multiply yield of 2fin by 2
+		req:(2fin>=1)
+
+		*lada
+		name:Лада 2107
+		desc:Ну не пешком же ходить, тем более машину подогнали.<//><b>Эффект:</b><.>В 2 раза больше Репутации за 2 пальца
+		icon:https://psv4.userapi.com/c856220/u151940442/docs/d16/79780af48d41/22.png?extra=jF4KL8MoUdIWB35bSrn0M_mdduydCibRvFEf4Foql77mHsZ1kO05NhuqtUxdg3sliS0qtwkgFl_D5jbn5H_RG_vXUB7OZlEY8kdvjxHAQr6xTV5TPCuRkZgSNZhRZof5MDxjqh7m_cJMgNmory11O7Q2
+		cost:5000 rep1
+		passive:multiply yield of 2fin by 2
+		req:(2fin>=5)
+
+		*raion
+		name:Битва за район
+		desc:Твоего кента оскорбили. Вы пошли стенка на стенку<//><b>Эффект:</b><.>В 2 раза больше Репутации за 2 пальца
+		icon:https://psv4.userapi.com/c856220/u151940442/docs/d10/b824a58715ca/22.png?extra=bHkzWI5i1iURdwSsXdGeUSD169M1e6nMprkX0hhkTIbcvpNkwWkr2eegwQWN7Gn28IMOh_fGSvA0hoJCEZ6IfXQ11su60UR2skLQnmKx4IFDJeUK933c2xNyov-Y-VAADA4mTN-knwOmO_IOxGgiNVQ7
+		cost:50000 rep1
+		passive:multiply yield of 2fin by 2
+		req:(2fin>=25)
+
+		*buisness
+		name:Бизнес компьютеров
+		desc:Ты уже забыл о своей старой комнатной жизни. Но в компах ты не перестал разбираться, может быть собирать компы и продавать школоте втридорога<//><b>Эффект:</b><.>В 2 раза больше Репутации за 2 пальца
+		icon:https://psv4.userapi.com/c856220/u151940442/docs/d15/bf1a7271aa37/22.png?extra=YY5st6dEcEiET2XNj7jItSyu_dMQRg9ZSUMU-oFRVH9Qz9o4qCQDAH7x7aWKPuOF7re1vsjlrwNg-ktHfp8pXIelE6ipbG9saNRCJbqxcf_r_9OFpKaZBRNMJtKdEqhA8QeH_PUX1lKh_xEnBZqtv2T7
+		cost:5000000 rep1
+		passive:multiply yield of 2fin by 2
+		req:(2fin>=50)
+
+*1finglvl
+		name:Смазка
+		desc:Тяжеловато заходит...<//><b>Эффект:</b><.>В 2 раза больше Репутации за 3 пальца
+		icon:https://psv4.userapi.com/c856220/u151940442/docs/d14/1bda5aa76bc4/22.png?extra=2jFq_F3TsaUiDBRvlB3MGDyiqCVVAuSF7axcda_gzM3rUBJjsiN2-G7n2Drngl0CSQFVJXfh_CsLKJa-Lx6kNUhE8uiczyJhRiP4oBob_HaRVG4dxZH6RtibzUwRK-oZ9fcSSHAgMAivJzDvUTA8GA1G
+		cost:11000 rep1
+		passive:multiply yield of 3fin by 2
+		req:(3fin>=1)
+
+*1bottle05vlv
+		name:Настоящий мужик!
+		desc:С пластика надо переходить на что нибудь другое, например на раскаленное железо<//><b>Эффект:</b><.>В 2 раза больше Репутации за 3 пальца
+		icon:https://psv4.userapi.com/c856220/u151940442/docs/d10/07e638c0c01b/22.png?extra=aPL2ncXASuEC2T15TUrk9wjgpcGNMFtjRY8kM3pTfODQepStlYpwLSNQjojl-uQKepXhL-SdpWsK0bLUtEj1rhbr6qoAulInvg0EMZ2e8BzWq2HEgoU75K3N5noal5e2Prrk4l-NpeDkB-Mj79kHqBvf
+		cost:55000 rep1
+		passive:multiply yield of 3fin by 2
+		req:(3fin>=5)
+
+*bottle1lvl
+		name:Настоящий робот!
+		desc:С раскаленного железа надо переходить на что нибудь другое, пожалуй в этот раз я выберу плазму<//><b>Эффект:</b><.>В 2 раза больше Репутации за 3 пальца
+		icon:https://psv4.userapi.com/c856220/u151940442/docs/d15/d025981e61da/22.png?extra=qWxmWP1gtv2ixPmAvxUJTi6k67aw1oHJFFoT9eqH2opoJ8C1vBOCtTof1xDAIoBEvChivFGSsZpA1xOiLs6nB4sEo4u-w0gvJZSyHTmNg3-Wa2UyVlRRN4cVN9DSvA5J4MSZU3udLaVrVWTBhsLxpJkY
+		cost:550000 rep1
+		passive:multiply yield of 3fin by 2
+		req:(3fin>=25)
+
+*Azaza
+		name:1 Планета
+		desc:Может быть следует захватить какую нибудь планету?<//><b>Эффект:</b><.>В 2 раза больше Репутации за 3 пальца
+		icon:https://psv4.userapi.com/c848332/u151940442/docs/d14/8dd08900e8d6/1.png?extra=mml23RdKvpg8BL2M9UI5wuo_jRc0s-p9NuLHPA5F5r5IH88MxaScQQYhGxjmn0p3R-1Dfjl87BxZXHK5b-kEr-YBUhzNJxZUak83MdGRKicLvA1gdmndJCR1UeX2VEu5kjAmOFYkaSohihQxwMYhF88u
+		cost:55000000 rep1
+		passive:multiply yield of 3fin by 2
+		req:(3fin>=50)
+
+
+Achievements
+	*TEMPLATE
+		on click:anim glow
+		
+	*1finach
+		name:Мой Герой!
+		desc:50 пальцев в жопу не много кто сможет засунуть, но ты справился!
+		req:(1fin>=50)
+		passive:multiply yield of 1fin by 2
+		icon:http://best-seosprint-team.ru/wp-content/uploads/images/science-9.png
+
+		*11finach
+		name:Дашь автограф?
+		desc:Сначала 50, сейчас 100, а дальше??.
+		req:(1fin>=100)
+		passive:multiply yield of 1fin by 2
+		icon:http://best-seosprint-team.ru/wp-content/uploads/images/science-9.png
+
+		*111finach
+		name:Мой лорд, принести вам смазку?
+		desc:200 пальцев это рекорд в твоем городе, ты чемпион!
+		req:(1fin>=200)
+		passive:multiply yield of 1fin by 2
+		icon:http://best-seosprint-team.ru/wp-content/uploads/images/science-9.png
+
+		*1111finach
+		name:test
+		desc:test
+		req:(1fin>=250)
+		passive:multiply yield of 1fin by 2
+		icon:http://best-seosprint-team.ru/wp-content/uploads/images/science-9.png
